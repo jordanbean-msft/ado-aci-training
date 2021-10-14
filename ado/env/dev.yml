@@ -1,6 +1,0 @@
-variables:
-  devEnvironmentName: dev
-  devKeyVaultName: kvappServicePerfUSSCDEV
-  devResourceGroupName: rg-appServicePerf-USSC-DEV
-  devAppServiceSubnetName: appServiceSubnet
-  devvNetName: vnet-appServicePerf-USSC-DEV
