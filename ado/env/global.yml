@@ -3,7 +3,7 @@ variables:
   appName: adoAci
   location: ussc
   adoAgentPoolName: adoAciPool
-  adoImageName: adoImage
+  adoImageName: ado
   adoImageVersion: latest
   adoUrl: https://dev.azure.com/jordanbean-msft-demo-org
   serviceConnectionName: jordanbean-aia
