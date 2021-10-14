@@ -23,7 +23,7 @@ steps:
       scriptLocation: inlineScript
       inlineScript: |
         az deployment group create --resource-group ${{ parameters.resourceGroupName }} \
-                                   --name ${{ variables.deploymentName }}
+                                   --name ${{ variables.deploymentName }} \
                                    --template-file ${{ parameters.pathToAdoAgentsDirectory }}/${{ variables.deploymentName }}/main.bicep \
                                    --parameters azpPool=${{ parameters.azpPool }} \
                                    --parameters azpToken=${{ parameters.azpToken }} \
