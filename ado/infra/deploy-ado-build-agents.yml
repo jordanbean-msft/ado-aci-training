@@ -9,7 +9,6 @@ parameters:
   - name: imageName
   - name: imageVersion
   - name: containerRegistryName
-  - name: logAnalyticsWorkspaceName
   - name: appName
   - name: location
   - name: deploymentName
@@ -32,7 +31,6 @@ steps:
                                    --parameters imageName=${{ parameters.imageName }} \
                                    --parameters imageVersion=${{ parameters.imageVersion }} \
                                    --parameters containerRegistryName=${{ parameters.containerRegistryName }} \
-                                   --parameters logAnalyticsWorkspaceName=${{ parameters.logAnalyticsWorkspaceName }} \
                                    --parameters appName=${{ parameters.appName }} \
                                    --parameters location=${{ parameters.location }} \
                                    --parameters environment=${{ parameters.environmentName }} \

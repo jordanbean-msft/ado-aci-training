@@ -45,7 +45,6 @@ stages:
                 imageName: ${{ variables.adoImageName }}
                 imageVersion: ${{ variables.adoImageVersion }}
                 containerRegistryName: $(containerRegistryName)
-                logAnalyticsWorkspaceName: $(logAnalyticsWorkspaceName)
                 azureServiceConnection: ${{ variables.serviceConnectionName }}
                 pathToAdoAgentsDirectory: ${{ variables.pathToAdoAgentsDirectory }}
                 environmentName: ${{ variables.centralEnvironmentName }}

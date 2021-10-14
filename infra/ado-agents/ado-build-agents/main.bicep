@@ -1,7 +1,6 @@
 param appName string
 param environment string
 param location string
-param logAnalyticsWorkspaceName string
 param containerRegistryName string
 param imageName string
 param imageVersion string
@@ -15,7 +14,6 @@ var longName = '${appName}-${location}-${environment}'
 module containerInstance 'aci.bicep' = {
   name: 'aciDeployment'
   params: {
-    logAnalyticsWorkspaceName: logAnalyticsWorkspaceName
     longName: longName
     containerRegistryName: containerRegistryName
     imageName: imageName
