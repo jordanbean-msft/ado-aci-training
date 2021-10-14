@@ -13,6 +13,9 @@ parameters:
   - name: appName
   - name: location
 
+variables:
+  deploymentName: ado-build-agents
+
 steps:
   - task: AzureCLI@2
     displayName: Deploy ADO Build Agents
@@ -22,7 +25,8 @@ steps:
       scriptLocation: inlineScript
       inlineScript: |
         az deployment group create --resource-group ${{ parameters.resourceGroupName }} \
-                                   --template-file ${{ parameters.pathToAdoAgentsDirectory }}/ado-build-agents/main.bicep \
+                                   --name ${{ variables.deploymentName }}
+                                   --template-file ${{ parameters.pathToAdoAgentsDirectory }}/${{ variables.deploymentName }}/main.bicep \
                                    --parameters azpPool=${{ parameters.azpPool }} \
                                    --parameters azpToken=${{ parameters.azpToken }} \
                                    --parameters azpUrl=${{ parameters.azpUrl }} \
@@ -33,6 +37,10 @@ steps:
                                    --parameters appName=${{ parameters.appName }} \
                                    --parameters location=${{ parameters.location }} \
                                    --parameters environment=${{ parameters.environmentName }}
+
+        echo "az deployment group show --resource-group ${{ parameters.resourceGroupName }} --name ${{ variables.deploymentName }}"
+        deploymentoutputs=$(az deployment group show --resource-group ${{ parameters.resourceGroupName }} --name ${{ variables.deploymentName }} \
+        --query properties.outputs)
 
         echo 'convert outputs to variables'
         echo $deploymentoutputs | jq -c '. | to_entries[] | [.key, .value.value]' |

@@ -6,6 +6,9 @@ parameters:
   - name: appName
   - name: location
 
+variables:
+  deploymentName: initial-infrastructure
+
 steps:
   - checkout: self
     persistCredentials: true
@@ -18,10 +21,15 @@ steps:
       scriptLocation: inlineScript
       inlineScript: |
         az deployment group create --resource-group ${{ parameters.resourceGroupName }} \
-                                   --template-file ${{ parameters.pathToAdoAgentsDirectory }}/initial-infrastructure/main.bicep \
+                                   --name ${{ variables.deploymentName }}
+                                   --template-file ${{ parameters.pathToAdoAgentsDirectory }}/${{ variables.deploymentName }}/main.bicep \
                                    --parameters appName=${{ parameters.appName }} \
                                    --parameters location=${{ parameters.location }} \
                                    --parameters environment=${{ parameters.environmentName }}
+
+        echo "az deployment group show --resource-group ${{ parameters.resourceGroupName }} --name ${{ variables.deploymentName }}"
+        deploymentoutputs=$(az deployment group show --resource-group ${{ parameters.resourceGroupName }} --name ${{ variables.deploymentName }} \
+        --query properties.outputs)
 
         echo 'convert outputs to variables'
         echo $deploymentoutputs | jq -c '. | to_entries[] | [.key, .value.value]' |
