@@ -50,4 +50,4 @@ stages:
                 pathToAdoAgentsDirectory: ${{ variables.pathToAdoAgentsDirectory }}
                 environmentName: ${{ variables.centralEnvironmentName }}
                 deploymentName: ${{ variables.centralAdoBuildAgentsDeploymentName }}
-                
+                numberOfContainersToCreate: ${{ variables.centralNumberOfContainersToCreate }}
