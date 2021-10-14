@@ -37,6 +37,10 @@ resource containerInstance 'Microsoft.ContainerInstance/containerGroups@2021-03-
               name: 'AZP_POOL'
               value: azpPool
             }
+            {
+              name: 'AZP_AGENT_NAME'
+              value: '${imageName}${i}'
+            }
           ]
           resources: {
             requests: {
