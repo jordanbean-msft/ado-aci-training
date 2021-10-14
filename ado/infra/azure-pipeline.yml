@@ -19,12 +19,18 @@ stages:
             - template: deploy-initial-infrastructure.yml
               parameters:
                 resourceGroupName: ${{ variables.centralResourceGroupName }}
+                azureServiceConnection: ${{ variables.serviceConnectionName }}
+                pathToAdoAgentsDirectory: ${{ variables.pathToAdoAgentsDirectory }}
+                environmentName: ${{ variables.centralEnvironmentName }}
             - template: build-image.yml
               parameters:
                 resourceGroupName: ${{ variables.centralResourceGroupName }}
                 containerRegistryName: $(containerRegistryName)
                 imageName: ${{ variables.adoImageName }}
                 imageVersion: ${{ variables.adoImageVersion }}
+                azureServiceConnection: ${{ variables.serviceConnectionName }}
+                pathToAdoAgentsDirectory: ${{ variables.pathToAdoAgentsDirectory }}
+                environmentName: ${{ variables.centralEnvironmentName }}
             - template: deploy-ado-build-agents.yml
               parameters:
                 resourceGroupName: ${{ variables.centralResourceGroupName }}
@@ -35,4 +41,7 @@ stages:
                 imageVersion: ${{ variables.adoImageVersion }}
                 containerRegistryName: $(containerRegistryName)
                 logAnalyticsWorkspaceName: $(logAnalyticsWorkspaceName)
+                azureServiceConnection: ${{ variables.serviceConnectionName }}
+                pathToAdoAgentsDirectory: ${{ variables.pathToAdoAgentsDirectory }}
+                environmentName: ${{ variables.centralEnvironmentName }}
                 
