@@ -16,7 +16,7 @@ stages:
         runOnce:
           deploy:
             steps:
-            - template: pre-deploy.yml
+            - template: deploy-initial-infrastructure.yml
               parameters:
                 resourceGroupName: ${{ variables.centralResourceGroupName }}
             - template: build-image.yml
@@ -25,7 +25,7 @@ stages:
                 containerRegistryName: $(containerRegistryName)
                 imageName: ${{ variables.adoImageName }}
                 imageVersion: ${{ variables.adoImageVersion }}
-            - template: post-deploy.yml
+            - template: deploy-ado-build-agents.yml
               parameters:
                 resourceGroupName: ${{ variables.centralResourceGroupName }}
                 azpPool: ${{ variables.adoAgentPoolName }}
