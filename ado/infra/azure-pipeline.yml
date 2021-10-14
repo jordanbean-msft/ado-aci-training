@@ -10,7 +10,7 @@ stages:
     jobs:
     - deployment: Central
       pool:
-        name: ${{ variables.adoAgentPoolName }}
+        name: 'ubuntu-latest'
       environment: ${{ variables.centralEnvironmentName }}
       strategy:
         runOnce:
