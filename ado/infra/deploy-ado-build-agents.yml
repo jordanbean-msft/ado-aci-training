@@ -12,9 +12,7 @@ parameters:
   - name: logAnalyticsWorkspaceName
   - name: appName
   - name: location
-
-variables:
-  deploymentName: ado-build-agents
+  - name: deploymentName
 
 steps:
   - task: AzureCLI@2

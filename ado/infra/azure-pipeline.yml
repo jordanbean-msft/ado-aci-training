@@ -24,6 +24,7 @@ stages:
                 azureServiceConnection: ${{ variables.serviceConnectionName }}
                 pathToAdoAgentsDirectory: ${{ variables.pathToAdoAgentsDirectory }}
                 environmentName: ${{ variables.centralEnvironmentName }}
+                deploymentName: ${{ variables.centralInitialInfrastructureDeploymentName }}
             - template: build-image.yml
               parameters:
                 resourceGroupName: ${{ variables.centralResourceGroupName }}
@@ -48,4 +49,5 @@ stages:
                 azureServiceConnection: ${{ variables.serviceConnectionName }}
                 pathToAdoAgentsDirectory: ${{ variables.pathToAdoAgentsDirectory }}
                 environmentName: ${{ variables.centralEnvironmentName }}
+                deploymentName: ${{ variables.centralAdoBuildAgentsDeploymentName }}
                 

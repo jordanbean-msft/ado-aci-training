@@ -5,9 +5,7 @@ parameters:
   - name: environmentName
   - name: appName
   - name: location
-
-variables:
-  deploymentName: initial-infrastructure
+  - name: deploymentName
 
 steps:
   - checkout: self
