@@ -10,6 +10,8 @@ parameters:
   - name: imageVersion
   - name: containerRegistryName
   - name: logAnalyticsWorkspaceName
+  - name: appName
+  - name: location
 
 steps:
   - task: AzureCLI@2
@@ -21,14 +23,16 @@ steps:
       inlineScript: |
         az deployment group create --resource-group ${{ parameters.resourceGroupName }} \
                                    --template-file ${{ parameters.pathToAdoAgentsDirectory }}/ado-build-agents/main.bicep \
-                                   --parameters ${{ parameters.pathToAdoAgentsDirectory }}/${{ parameters.environmentName }}.parameters.json \
                                    --parameters azpPool=${{ parameters.azpPool }} \
                                    --parameters azpToken=${{ parameters.azpToken }} \
                                    --parameters azpUrl=${{ parameters.azpUrl }} \
                                    --parameters imageName=${{ parameters.imageName }} \
                                    --parameters imageVersion=${{ parameters.imageVersion }} \
                                    --parameters containerRegistryName=${{ parameters.containerRegistryName }} \
-                                   --parameters logAnalyticsWorkspaceName=${{ parameters.logAnalyticsWorkspaceName }}
+                                   --parameters logAnalyticsWorkspaceName=${{ parameters.logAnalyticsWorkspaceName }} \
+                                   --parameters appName=${{ parameters.appName }} \
+                                   --parameters location=${{ parameters.location }} \
+                                   --parameters environment=${{ parameters.environmentName }}
 
         echo 'convert outputs to variables'
         echo $deploymentoutputs | jq -c '. | to_entries[] | [.key, .value.value]' |

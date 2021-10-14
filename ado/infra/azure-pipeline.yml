@@ -18,6 +18,8 @@ stages:
             steps:
             - template: deploy-initial-infrastructure.yml
               parameters:
+                appName: ${{ variables.appName }}
+                location: ${{ variables.location }}
                 resourceGroupName: ${{ variables.centralResourceGroupName }}
                 azureServiceConnection: ${{ variables.serviceConnectionName }}
                 pathToAdoAgentsDirectory: ${{ variables.pathToAdoAgentsDirectory }}
@@ -33,6 +35,8 @@ stages:
                 environmentName: ${{ variables.centralEnvironmentName }}
             - template: deploy-ado-build-agents.yml
               parameters:
+                appName: ${{ variables.appName }}
+                location: ${{ variables.location }}
                 resourceGroupName: ${{ variables.centralResourceGroupName }}
                 azpPool: ${{ variables.adoAgentPoolName }}
                 azpToken: $(azpToken)

@@ -3,6 +3,8 @@ parameters:
   - name: azureServiceConnection
   - name: pathToAdoAgentsDirectory
   - name: environmentName
+  - name: appName
+  - name: location
 
 steps:
   - checkout: self
@@ -17,7 +19,9 @@ steps:
       inlineScript: |
         az deployment group create --resource-group ${{ parameters.resourceGroupName }} \
                                    --template-file ${{ parameters.pathToAdoAgentsDirectory }}/initial-infrastructure/main.bicep \
-                                   --parameters ${{ parameters.pathToAdoAgentsDirectory }}/${{ parameters.environmentName }}.parameters.json
+                                   --parameters appName=${{ parameters.appName }} \
+                                   --parameters location=${{ parameters.location }} \
+                                   --parameters environment=${{ parameters.environmentName }}
 
         echo 'convert outputs to variables'
         echo $deploymentoutputs | jq -c '. | to_entries[] | [.key, .value.value]' |

@@ -1,3 +1,4 @@
 variables:
   centralEnvironmentName: central
   centralResourceGroupName: rg-adoAci-ussc-central
+  numberOfContainersToCreate: 4

@@ -1,5 +1,7 @@
 variables:
   System.Debug: true
+  appName: adoAci
+  location: ussc
   adoAgentPoolName: adoAciPool
   adoImageName: adoImage
   adoImageVersion: latest
