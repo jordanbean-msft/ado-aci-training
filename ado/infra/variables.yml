@@ -1,3 +1,3 @@
 variables:
-  pathToAdoAgentsDirectory: $(System.DefaultWorkingDirectory)/ado-agents
-  pathToAdoAgentDockerfile: $(System.DefaultWorkingDirectory)/ado-agents/dockeragent
+  pathToAdoAgentsDirectory: $(System.DefaultWorkingDirectory)/infra/ado-agents
+  pathToAdoAgentDockerfile: $(System.DefaultWorkingDirectory)/infra/ado-agents/dockeragent

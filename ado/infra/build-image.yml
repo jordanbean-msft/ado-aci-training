@@ -9,6 +9,7 @@ parameters:
 
 steps:
   - task: AzureCLI@2
+    displayName: Build Container Image
     inputs:
       azureSubscription: ${{ parameters.azureServiceConnection }}
       scriptType: bash

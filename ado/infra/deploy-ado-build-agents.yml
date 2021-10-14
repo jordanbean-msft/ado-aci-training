@@ -13,6 +13,7 @@ parameters:
 
 steps:
   - task: AzureCLI@2
+    displayName: Deploy ADO Build Agents
     inputs:
       azureSubscription: ${{ parameters.azureServiceConnection }}
       scriptType: bash
