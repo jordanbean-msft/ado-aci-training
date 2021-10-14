@@ -14,4 +14,4 @@ steps:
       scriptType: bash
       scriptLocation: inlineScript
       inlineScript: |
-        az acr build --image ${{ parameters.imageName }}:${{ parameters.imageVersion}} --registry ${{ parameters.containerRegistryName }} ${{ pathToAdoAgentDockerfile }}
+        az acr build --image ${{ parameters.imageName }}:${{ parameters.imageVersion}} --registry ${{ parameters.containerRegistryName }} ${{ parameters.pathToAdoAgentDockerfile }}
