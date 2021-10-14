@@ -1,11 +1,11 @@
 parameters:
   - name: resourceGroupName
   - name: azureServiceConnection
-  - name: pathToAdoAgentsDirectory
   - name: environmentName
   - name: imageName
   - name: imageVersion
   - name: containerRegistryName
+  - name: pathToAdoAgentDockerfile
 
 steps:
   - task: AzureCLI@2

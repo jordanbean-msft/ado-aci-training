@@ -29,7 +29,7 @@ stages:
                 imageName: ${{ variables.adoImageName }}
                 imageVersion: ${{ variables.adoImageVersion }}
                 azureServiceConnection: ${{ variables.serviceConnectionName }}
-                pathToAdoAgentsDirectory: ${{ variables.pathToAdoAgentsDirectory }}
+                pathToAdoAgentDockerfile: ${{ variables.pathToAdoAgentDockerfile }}
                 environmentName: ${{ variables.centralEnvironmentName }}
             - template: deploy-ado-build-agents.yml
               parameters:
