@@ -3,8 +3,8 @@ parameters:
   - name: azureServiceConnection
   - name: pathToAdoAgentsDirectory
   - name: environmentName
-  - name: adoImageName
-  - name: adoImageVersion
+  - name: imageName
+  - name: imageVersion
   - name: containerRegistryName
 
 steps:
@@ -14,4 +14,4 @@ steps:
       scriptType: bash
       scriptLocation: inlineScript
       inlineScript: |
-        az acr build --image ${{ parameters.adoImageName }}:${{ parameters.adoImageVersion}} --registry ${{ parameters.containerRegistryName }} ${{ pathToAdoAgentDockerfile }}
+        az acr build --image ${{ parameters.imageName }}:${{ parameters.imageVersion}} --registry ${{ parameters.containerRegistryName }} ${{ pathToAdoAgentDockerfile }}
