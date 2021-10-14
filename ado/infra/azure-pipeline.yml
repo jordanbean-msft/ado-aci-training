@@ -1,0 +1,38 @@
+name: AdoAgents 
+variables:
+  - template: ../../ado/env/global.yml
+  - template: ../../ado/env/central.yml
+  - template: variables.yml
+trigger:
+  - main
+stages:
+  - stage: Central 
+    jobs:
+    - deployment: Central
+      pool:
+        name: ${{ variables.adoAgentPoolName }}
+      environment: ${{ variables.centralEnvironmentName }}
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+            - template: pre-deploy.yml
+              parameters:
+                resourceGroupName: ${{ variables.centralResourceGroupName }}
+            - template: build-image.yml
+              parameters:
+                resourceGroupName: ${{ variables.centralResourceGroupName }}
+                containerRegistryName: $(containerRegistryName)
+                imageName: ${{ variables.adoImageName }}
+                imageVersion: ${{ variables.adoImageVersion }}
+            - template: post-deploy.yml
+              parameters:
+                resourceGroupName: ${{ variables.centralResourceGroupName }}
+                azpPool: ${{ variables.adoAgentPoolName }}
+                azpToken: $(azpToken)
+                azpUrl: ${{ variables.adoUrl }}
+                imageName: ${{ variables.adoImageName }}
+                imageVersion: ${{ variables.adoImageVersion }}
+                containerRegistryName: $(containerRegistryName)
+                logAnalyticsWorkspaceName: $(logAnalyticsWorkspaceName)
+                

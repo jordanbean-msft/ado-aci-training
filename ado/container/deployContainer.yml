@@ -1,0 +1,7 @@
+parameters:
+  - name: environmentName
+  - name: globalTerraformVariableFilename
+  - name: pathToTerraformDirectory
+  - name: pathToTerraformEnvironmentVariablesDirectory
+  
+steps:

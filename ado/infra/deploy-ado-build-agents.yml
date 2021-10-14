@@ -1,0 +1,39 @@
+parameters:
+  - name: resourceGroupName
+  - name: azureServiceConnection
+  - name: pathToAdoAgentsDirectory
+  - name: environmentName
+  - name: azpPool
+  - name: azpToken
+  - name: azpUrl
+  - name: imageName
+  - name: imageVersion
+  - name: containerRegistryName
+  - name: logAnalyticsWorkspaceName
+
+steps:
+  - task: AzureCLI@2
+    inputs:
+      azureSubscription: ${{ parameters.azureServiceConnection }}
+      scriptType: bash
+      scriptLocation: inlineScript
+      inlineScript: |
+        az deployment group create --resource-group ${{ parameters.resourceGroupName }} \
+                                   --template-file ${{ parameters.pathToAdoAgentsDirectory }}/ado-build-agents/main.bicep \
+                                   --parameters ${{ parameters.pathToAdoAgentsDirectory }}/${{ environmentName }}.parameters.json \
+                                   --parameters azpPool=${{ parameters.azpPool }} \
+                                   --parameters azpToken=${{ parameters.azpToken }} \
+                                   --parameters azpUrl=${{ parameters.azpUrl }} \
+                                   --parameters imageName=${{ parameters.imageName }} \
+                                   --parameters imageVersion=${{ parameters.imageVersion }} \
+                                   --parameters containerRegistryName=${{ parameters.containerRegistryName }} \
+                                   --parameters logAnalyticsWorkspaceName=${{ parameters.logAnalyticsWorkspaceName }}
+
+        echo 'convert outputs to variables'
+        echo $deploymentoutputs | jq -c '. | to_entries[] | [.key, .value.value]' |
+        while IFS=$"\n" read -r c; do
+          outputname=$(echo "$c" | jq -r '.[0]')
+          outputvalue=$(echo "$c" | jq -r '.[1]')
+          echo "setting variable $outputname=$outputvalue"
+          echo "##vso[task.setvariable variable=$outputname]$outputvalue"
+        done

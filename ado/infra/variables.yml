@@ -1,0 +1,10 @@
+parameters:
+  - name: adoScriptDirectoryName
+  - name: terraformDirectoryName
+  - name: terraformEnvironmentVariablesDirectoryName
+  - name: terraformWebAppDirectoryName
+  - name: webAppProjectName
+  - name: webAppSQLMigrationScriptDirectoryName
+  - name: webAppSolutionName
+
+variables:

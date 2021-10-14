@@ -1,0 +1,17 @@
+parameters:
+  - name: resourceGroupName
+  - name: azureServiceConnection
+  - name: pathToAdoAgentsDirectory
+  - name: environmentName
+  - name: adoImageName
+  - name: adoImageVersion
+  - name: containerRegistryName
+
+steps:
+  - task: AzureCLI@2
+    inputs:
+      azureSubscription: ${{ parameters.azureServiceConnection }}
+      scriptType: bash
+      scriptLocation: inlineScript
+      inlineScript: |
+        az acr build --image ${{ parameters.adoImageName }}:${{ parameters.adoImageVersion}} --registry ${{ parameters.containerRegistryName }} ${{ pathToAdoAgentDockerfile }}

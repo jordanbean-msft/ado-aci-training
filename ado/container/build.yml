@@ -1,0 +1,28 @@
+parameters:
+ - name: artifactName
+ - name: configuration
+ - name: pathToWebAppProjectDirectory
+ - name: webAppProjectName
+
+steps:
+  - template: printEnv.yml
+  - task: DotNetCoreCLI@2
+    displayName: Restore NuGet packages
+    inputs:
+      command: restore
+      projects: '**/*.csproj'
+      includeNuGetOrg: true
+  - task: DotNetCoreCLI@2
+    displayName: Build
+    inputs:
+      command: build
+      arguments: --configuration ${{ parameters.configuration }} --no-restore
+      projects: |
+        ${{ parameters.pathToWebAppProjectDirectory }}/${{ parameters.webAppProjectName }}.csproj
+  - task: DotNetCoreCLI@2
+    displayName: Publish
+    inputs:
+      command: publish
+      arguments: -c ${{ parameters.configuration }} -o $(Build.ArtifactStagingDirectory)
+  - publish: $(Build.ArtifactStagingDirectory)
+    artifact: ${{ parameters.artifactName }}

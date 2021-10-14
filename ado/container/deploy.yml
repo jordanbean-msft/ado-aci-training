@@ -1,0 +1,36 @@
+parameters:
+  - name: artifactName
+  - name: environmentName
+  - name: globalTerraformVariableFilename
+  - name: pathToAdoScriptDirectory
+  - name: pathToSQLMigrationDirectory
+  - name: pathToTerraformDirectory
+  - name: pathToTerraformEnvironmentVariablesDirectory
+  - name: serviceConnectionName
+  - name: sqlServerAdminPassword
+  - name: sqlServerAdminUsername
+  - name: webAppProjectName
+
+steps:
+  - checkout: self
+    persistCredentials: true
+  - template: printEnv.yml
+  - template: deployTerraform.yml
+    parameters:
+      environmentName: ${{ parameters.environmentName }}
+      globalTerraformVariableFilename: ${{ parameters.globalTerraformVariableFilename }}
+      pathToTerraformDirectory: ${{ parameters.pathToTerraformDirectory }}
+      pathToTerraformEnvironmentVariablesDirectory: ${{ parameters.pathToTerraformEnvironmentVariablesDirectory }}
+  - template: deploySQL.yml
+    parameters:
+      migrationScriptPath: ${{ parameters.pathToSQLMigrationDirectory }}
+      password: ${{ parameters.sqlServerAdminPassword }}
+      pathToAdoScriptDirectory: ${{ parameters.pathToAdoScriptDirectory }}
+      sqlDatabaseName: $(terraformOutput.sqlDatabaseName)
+      sqlServerName: $(terraformOutput.sqlServerName)
+      username: ${{ parameters.sqlServerAdminUsername }}
+  - template: deployWebApp.yml
+    parameters:
+      appServiceName: $(terraformOutput.appServiceName) 
+      artifactName: $(Pipeline.Workspace)/${{ parameters.artifactName }}/${{ parameters.webAppProjectName }}.zip
+      serviceConnectionName: ${{ parameters.serviceConnectionName }}
