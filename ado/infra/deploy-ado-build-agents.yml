@@ -20,7 +20,7 @@ steps:
       inlineScript: |
         az deployment group create --resource-group ${{ parameters.resourceGroupName }} \
                                    --template-file ${{ parameters.pathToAdoAgentsDirectory }}/ado-build-agents/main.bicep \
-                                   --parameters ${{ parameters.pathToAdoAgentsDirectory }}/${{ environmentName }}.parameters.json \
+                                   --parameters ${{ parameters.pathToAdoAgentsDirectory }}/${{ parameters.environmentName }}.parameters.json \
                                    --parameters azpPool=${{ parameters.azpPool }} \
                                    --parameters azpToken=${{ parameters.azpToken }} \
                                    --parameters azpUrl=${{ parameters.azpUrl }} \

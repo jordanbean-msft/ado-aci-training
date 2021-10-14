@@ -16,7 +16,7 @@ steps:
       inlineScript: |
         az deployment group create --resource-group ${{ parameters.resourceGroupName }} \
                                    --template-file ${{ parameters.pathToAdoAgentsDirectory }}/initial-infrastructure/main.bicep \
-                                   --parameters ${{ parameters.pathToAdoAgentsDirectory }}/${{ environmentName }}.parameters.json
+                                   --parameters ${{ parameters.pathToAdoAgentsDirectory }}/${{ parameters.environmentName }}.parameters.json
 
         echo 'convert outputs to variables'
         echo $deploymentoutputs | jq -c '. | to_entries[] | [.key, .value.value]' |
