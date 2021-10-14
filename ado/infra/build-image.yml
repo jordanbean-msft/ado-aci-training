@@ -15,4 +15,4 @@ steps:
       scriptType: bash
       scriptLocation: inlineScript
       inlineScript: |
-        az acr build --image ${{ parameters.containerRegistryName }}.azurecr.io/${{ parameters.imageName }}:${{ parameters.imageVersion}} --registry ${{ parameters.containerRegistryName }} ${{ parameters.pathToAdoAgentDockerfile }}
+        az acr build --image ${{ parameters.containerRegistryName }}/${{ parameters.imageName }}:${{ parameters.imageVersion}} --registry ${{ parameters.containerRegistryName }} ${{ parameters.pathToAdoAgentDockerfile }}
