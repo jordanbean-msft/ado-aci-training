@@ -30,7 +30,7 @@ stages:
                 location: ${{ variables.location }}
                 pathToAdoAgentsDirectory: ${{ variables.pathToAdoAgentsDirectory }}
                 resourceGroupName: ${{ variables.centralResourceGroupName }}
-            - template: ../global/build-image.yml
+            - template: ../../global/build-image.yml
               parameters:
                 azureServiceConnection: ${{ variables.serviceConnectionName }}
                 containerRegistryName: $(containerRegistryName)
