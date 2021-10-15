@@ -1,7 +1,7 @@
 name: AdoAgents 
 variables:
-  - template: ../../ado/env/global.yml
-  - template: ../../ado/env/central.yml
+  - template: ../../env/global.yml
+  - template: ../../env/central.yml
   - template: variables.yml
     parameters:
       adoAgentsDirectoryName: ${{ variables.centralAdoAgentsDirectoryName }}
