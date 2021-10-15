@@ -1,0 +1,5 @@
+steps:
+  - bash: env | sort
+    displayName: Print environment variables      
+  - bash: tree
+    displayName: Print directory tree

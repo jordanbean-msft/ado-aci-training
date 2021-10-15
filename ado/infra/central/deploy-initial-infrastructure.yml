@@ -1,0 +1,39 @@
+parameters:
+  - name: appName
+  - name: azureServiceConnection
+  - name: deploymentName
+  - name: environmentName
+  - name: location
+  - name: pathToAdoAgentsDirectory
+  - name: resourceGroupName
+
+steps:
+  - checkout: self
+    persistCredentials: true
+  - template: ../../global/print-env.yml
+  - task: AzureCLI@2
+    displayName: Deploy Initial Infrastructure
+    inputs:
+      azureSubscription: ${{ parameters.azureServiceConnection }}
+      scriptType: bash
+      scriptLocation: inlineScript
+      inlineScript: |
+        az deployment group create --resource-group ${{ parameters.resourceGroupName }} \
+                                   --name ${{ parameters.deploymentName }} \
+                                   --template-file ${{ parameters.pathToAdoAgentsDirectory }}/${{ parameters.deploymentName }}/main.bicep \
+                                   --parameters appName=${{ parameters.appName }} \
+                                   --parameters location=${{ parameters.location }} \
+                                   --parameters environment=${{ parameters.environmentName }}
+
+        echo "az deployment group show --resource-group ${{ parameters.resourceGroupName }} --name ${{ parameters.deploymentName }}"
+        deploymentoutputs=$(az deployment group show --resource-group ${{ parameters.resourceGroupName }} --name ${{ parameters.deploymentName }} \
+        --query properties.outputs)
+
+        echo 'convert outputs to variables'
+        echo $deploymentoutputs | jq -c '. | to_entries[] | [.key, .value.value]' |
+        while IFS=$"\n" read -r c; do
+          outputname=$(echo "$c" | jq -r '.[0]')
+          outputvalue=$(echo "$c" | jq -r '.[1]')
+          echo "setting variable $outputname=$outputvalue"
+          echo "##vso[task.setvariable variable=$outputname]$outputvalue"
+        done

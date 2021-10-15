@@ -1,0 +1,57 @@
+name: AdoAgents 
+variables:
+  - template: ../../env/global.yml
+  - template: ../../env/central.yml
+  - template: variables.yml
+    parameters:
+      adoAgentsDirectoryName: ${{ variables.centralAdoAgentsDirectoryName }}
+      adoDirectoryName: ${{ variables.adoDirectoryName }}
+      centralEnvironmentName: ${{ variables.centralEnvironmentName }}
+      infrastructureDirectoryName: ${{ variables.infrastructureDirectoryName }}
+trigger:
+  - main
+stages:
+  - stage: Central 
+    jobs:
+    - deployment: Central
+      pool:
+        vmImage: 'ubuntu-latest'
+      environment: ${{ variables.centralEnvironmentName }}
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+            - template: deploy-initial-infrastructure.yml
+              parameters:
+                appName: ${{ variables.appName }}
+                azureServiceConnection: ${{ variables.serviceConnectionName }}
+                deploymentName: ${{ variables.centralInitialInfrastructureDeploymentName }}
+                environmentName: ${{ variables.centralEnvironmentName }}
+                location: ${{ variables.location }}
+                pathToAdoAgentsDirectory: ${{ variables.pathToAdoAgentsDirectory }}
+                resourceGroupName: ${{ variables.centralResourceGroupName }}
+            - template: ../../global/build-image.yml
+              parameters:
+                azureServiceConnection: ${{ variables.serviceConnectionName }}
+                containerRegistryName: $(containerRegistryName)
+                environmentName: ${{ variables.centralEnvironmentName }}
+                imageName: ${{ variables.adoImageName }}
+                imageVersion: ${{ variables.adoImageVersion }}
+                pathToDockerfile: ${{ variables.pathToAdoAgentDockerfile }}
+                resourceGroupName: ${{ variables.centralResourceGroupName }}
+            - template: deploy-ado-build-agents.yml
+              parameters:
+                appName: ${{ variables.appName }}
+                azpPool: ${{ variables.adoAgentPoolName }}
+                azpToken: $(azpToken)
+                azpUrl: ${{ variables.adoUrl }}
+                azureServiceConnection: ${{ variables.serviceConnectionName }}
+                containerRegistryName: $(containerRegistryName)
+                deploymentName: ${{ variables.centralAdoBuildAgentsDeploymentName }}
+                environmentName: ${{ variables.centralEnvironmentName }}
+                imageName: ${{ variables.adoImageName }}
+                imageVersion: ${{ variables.adoImageVersion }}
+                location: ${{ variables.location }}
+                numberOfContainersToCreate: ${{ variables.centralNumberOfContainersToCreate }}
+                pathToAdoAgentsDirectory: ${{ variables.pathToAdoAgentsDirectory }}
+                resourceGroupName: ${{ variables.centralResourceGroupName }}

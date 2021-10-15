@@ -1,0 +1,9 @@
+parameters:
+  - name: adoAgentsDirectoryName
+  - name: adoDirectoryName
+  - name: centralEnvironmentName
+  - name: infrastructureDirectoryName
+
+variables:
+  pathToAdoAgentsDirectory: $(System.DefaultWorkingDirectory)/${{ parameters.adoDirectoryName}}/${{ parameters.infrastructureDirectoryName }}/${{ parameters.centralEnvironmentName }}/${{ parameters.adoAgentsDirectoryName }}
+  pathToAdoAgentDockerfile: $(System.DefaultWorkingDirectory)/${{ parameters.adoDirectoryName}}/${{ parameters.infrastructureDirectoryName }}/${{ parameters.centralEnvironmentName }}/${{ parameters.adoAgentsDirectoryName }}/dockeragent

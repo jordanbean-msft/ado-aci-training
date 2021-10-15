@@ -1,0 +1,18 @@
+parameters:
+  - name: azureServiceConnection
+  - name: containerRegistryName
+  - name: environmentName
+  - name: imageName
+  - name: imageVersion
+  - name: pathToDockerfile
+  - name: resourceGroupName
+
+steps:
+  - task: AzureCLI@2
+    displayName: Build Container Image
+    inputs:
+      azureSubscription: ${{ parameters.azureServiceConnection }}
+      scriptType: bash
+      scriptLocation: inlineScript
+      inlineScript: |
+        az acr build --image ${{ parameters.imageName }}:${{ parameters.imageVersion }} --registry ${{ parameters.containerRegistryName }} ${{ parameters.pathToDockerfile }}
