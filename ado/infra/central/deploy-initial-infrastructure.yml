@@ -10,7 +10,7 @@ parameters:
 steps:
   - checkout: self
     persistCredentials: true
-  - template: ../global/print-env.yml
+  - template: ../../global/print-env.yml
   - task: AzureCLI@2
     displayName: Deploy Initial Infrastructure
     inputs:
