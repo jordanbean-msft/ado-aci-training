@@ -1,11 +1,11 @@
 parameters:
-  - name: resourceGroupName
   - name: azureServiceConnection
+  - name: containerRegistryName
   - name: environmentName
   - name: imageName
   - name: imageVersion
-  - name: containerRegistryName
   - name: pathToDockerfile
+  - name: resourceGroupName
 
 steps:
   - task: AzureCLI@2

@@ -1,22 +1,18 @@
 parameters:
-  - name: resourceGroupName
-  - name: azureServiceConnection
-  - name: pathToAdoAgentsDirectory
-  - name: environmentName
-  - name: azpPool
-  - name: azpToken
-  - name: azpUrl
-  - name: imageName
-  - name: imageVersion
-  - name: containerRegistryName
   - name: appName
-  - name: location
+  - name: azureServiceConnection
   - name: deploymentName
-  - name: numberOfContainersToCreate
+  - name: environmentName
+  - name: location
+  - name: pathToAdoAgentsDirectory
+  - name: resourceGroupName
 
 steps:
+  - checkout: self
+    persistCredentials: true
+  - template: ../global/print-env.yml
   - task: AzureCLI@2
-    displayName: Deploy ADO Build Agents
+    displayName: Deploy Initial Infrastructure
     inputs:
       azureSubscription: ${{ parameters.azureServiceConnection }}
       scriptType: bash
@@ -25,16 +21,9 @@ steps:
         az deployment group create --resource-group ${{ parameters.resourceGroupName }} \
                                    --name ${{ parameters.deploymentName }} \
                                    --template-file ${{ parameters.pathToAdoAgentsDirectory }}/${{ parameters.deploymentName }}/main.bicep \
-                                   --parameters azpPool=${{ parameters.azpPool }} \
-                                   --parameters azpToken=${{ parameters.azpToken }} \
-                                   --parameters azpUrl=${{ parameters.azpUrl }} \
-                                   --parameters imageName=${{ parameters.imageName }} \
-                                   --parameters imageVersion=${{ parameters.imageVersion }} \
-                                   --parameters containerRegistryName=${{ parameters.containerRegistryName }} \
                                    --parameters appName=${{ parameters.appName }} \
                                    --parameters location=${{ parameters.location }} \
-                                   --parameters environment=${{ parameters.environmentName }} \
-                                   --parameters numberOfContainersToCreate=${{ parameters.numberOfContainersToCreate }}
+                                   --parameters environment=${{ parameters.environmentName }}
 
         echo "az deployment group show --resource-group ${{ parameters.resourceGroupName }} --name ${{ parameters.deploymentName }}"
         deploymentoutputs=$(az deployment group show --resource-group ${{ parameters.resourceGroupName }} --name ${{ parameters.deploymentName }} \

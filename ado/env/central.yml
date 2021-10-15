@@ -1,6 +1,7 @@
 variables:
-  centralEnvironmentName: central
-  centralResourceGroupName: rg-adoAci-ussc-central
-  centralNumberOfContainersToCreate: 4
-  centralInitialInfrastructureDeploymentName: initial-infrastructure
+  centralAdoAgentsDirectoryName: ado-agents
   centralAdoBuildAgentsDeploymentName: ado-build-agents
+  centralEnvironmentName: central
+  centralInitialInfrastructureDeploymentName: initial
+  centralNumberOfContainersToCreate: 4
+  centralResourceGroupName: rg-adoAci-ussc-central
