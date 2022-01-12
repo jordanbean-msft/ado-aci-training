@@ -1,6 +1,6 @@
 # ado-aci-training
 
-This repo shows you how to set up an Azure DevOps (ADO) pipeline that deploys ADO [self-hosted build agents](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/docker?view=azure-devops) to Azure Container Instance (ACI). This allows you to host multiple build agents in your own subscription for parallel build/deployments or to have access to a vNet you control. The ADO build agent is running on each container in the container group and will regularly ping Azure DevOps listening for work.
+This repo shows you how to set up an Azure DevOps (ADO) pipeline that deploys ADO [self-hosted build agents](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/docker?view=azure-devops) to Azure Container Instance (ACI). This allows you to host multiple build agents in your own subscription for parallel build/deployments or to have access to a vNet you control. The ADO build agents are running on each container in the container group and will regularly ping Azure DevOps listening for work.
 
 ![adoAciAgentPool](.img/adoAciAgentPool.png)
 
@@ -117,9 +117,9 @@ You can also see that this is a **deployment** job. You can deploy to Azure usin
 
 Finally, you can see the calls to the 3 deployment scripts.
 
-In the `/ado/infra/central/dockeragent` directory, you can see the Dockerfile & startup script that the containers are built with. These are pulled from the Azure DevOps [documentation](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/docker?view=azure-devops#create-and-build-the-dockerfile-1). They are not built locally on the build agent when this pipeline runs, but are built inside the Azure Container Registry using the **az acr build** task (in the `/ado/global/build-image.yml` file).
+In the `/ado/infra/central/ado-agents/dockeragent` directory, you can see the Dockerfile & startup script that the containers are built with. These are pulled from the Azure DevOps [documentation](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/docker?view=azure-devops#create-and-build-the-dockerfile-1). They are not built locally on the build agent when this pipeline runs, but are built inside the Azure Container Registry using the **az acr build** task (in the `/ado/global/build-image.yml` file).
 
-You will also notice that ACI doesn't require a Docker Compose or Kubernetes object YAML files. You can use [YAML](https://docs.microsoft.com/en-us/azure/container-instances/container-instances-reference-yaml) if you want to to configure, but you can also do the configuration directly in the deployment [Bicep](https://docs.microsoft.com/en-us/azure/templates/microsoft.containerinstance/containergroups?tabs=bicep) file `/ado/infra/central/ado-build-agents/aci.bicep`.
+You will also notice that ACI doesn't require a Docker Compose or Kubernetes object YAML files. You can use [YAML](https://docs.microsoft.com/en-us/azure/container-instances/container-instances-reference-yaml) if you want to to configure, but you can also do the configuration directly in the deployment [Bicep](https://docs.microsoft.com/en-us/azure/templates/microsoft.containerinstance/containergroups?tabs=bicep) file `/ado/infra/central/ado-agents/ado-build-agents/aci.bicep`.
 
 ## References
 
